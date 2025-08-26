@@ -1,0 +1,36 @@
+plugins {
+  id 'java'
+  id 'jacoco'
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+test {
+  useJUnitPlatform()
+  finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+  reports {
+    xml.required = true
+    html.required = true
+  }
+}
+
+jacocoTestCoverageVerification {
+  violationRules {
+    rule {
+      limit {
+        counter = 'INSTRUCTION'
+        value   = 'COVEREDRATIO'
+        minimum = 0.80
+      }
+    }
+  }
+}
+
+check.dependsOn jacocoTestCoverageVerification
